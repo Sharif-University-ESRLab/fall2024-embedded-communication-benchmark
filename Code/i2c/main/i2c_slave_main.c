@@ -133,7 +133,7 @@ void tx_task(void *arg) {
         int64_t duration = end_time - start_time;
         //ESP_LOGD("UART", "Transmit::Time taken: lld microseconds");
         tx_time_list[i] = duration;
-        //ESP_LOGD("UART", "Transmit::Time taken: %lld microseconds", duration);
+        ESP_LOGD("UART", "Transmit::Time taken: %lld microseconds", duration);
 //        vTaskDelay(DEADLINE_MS / portTICK_PERIOD_MS); // in SPI only the master must have a delay, introducing a delay on the slave side causes sync errors in SPI.
         //ESP_LOGD("UART", "After delay");
     }
