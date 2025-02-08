@@ -15,10 +15,33 @@ In this section, you should mention the hardware or simulators utilized in your 
 
 ## Implementation Details
 
-In this section, you will explain how you completed your project. It is recommended to use pictures to demonstrate your system model and implementation.
+Each communication protocol comes with its own project. The projects utilize FreeRTOS' ability to manage two devices at once.
 
+At the beginning of each project, two devices on the board (for example, UART0 and UART1) are configured with the appropriate parameters. For example in the SPI case, one of the devices is configured as the master and the other one as the slave. Other configurations, like baud rate, frequency, and addresses also take place in this section.
 
-Feel free to use sub-topics for your projects. If your project consists of multiple parts (e.g. server, client, and embedded device), create a separate topic for each one.
+Subsequently, two RTOS tasks are created, one for data transmission and one for recieving. RTOS handles multithreading and multicore functionalities as needed. 
+
+These tasks exist to simulate two separate devices. Our scenario simulates a real time application with a deadline. At the start of each simulation round, a certain amount of random data is created and then transmitted to the reciever. The time of each phase of the process is accurately measured and logged. For the UART protocol, which is symmetric, an additional signaling method has been implemented.
+
+The two tasks work together to make sure that both device controllers stay active and the transmission persists until all the data has been transferred.
+
+Variables like the task deadlines, the amount of data to be transferred, and the number of simulation rounds, can be changed in the project configuration phase.
+
+After all the transmissions are done, the RX and TX times are used to calculatd the average, standard deviation, and worst case execution times.
+
+Example of a TX task:
+
+<img src="./Miscellaneous/tx_task.jpg" />
+
+- Initially a buffer is allocated. In this particular example the fact that it is allocated in a DMA accessible heap region is important due to specifications of the SPI driver.
+- Afterwards, in the simulation loop, the data is initialized and the timer starts. During this time, the *_transmit function implements the protocol specific logic for clear and safe transmission of data.
+- When the function returns, the timer stops and the duration is computed and stored for later use.
+
+Example of a main function:
+
+<img src="./Miscellaneous/main.jpg" />
+
+- This task highlights the attempt at modularity that was part of our main objectives in implementing this project. To adapt the code for a new protocl, the configuration and transmission functions need to be implemented with respect to that procotol, but the tasks and the main function should be able to work the same way.
 
 ## How to Run
 
