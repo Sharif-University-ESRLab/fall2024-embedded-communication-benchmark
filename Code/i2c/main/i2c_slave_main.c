@@ -166,7 +166,7 @@ static void rx_task(void *arg)
     while (true) {
         i2c_slave_event_t evt;
         int64_t start_time = esp_timer_get_time();
-        if (xQueueReceive(context->event_queue, &evt, 10) == pdTRUE) {
+        if (xQueueReceive(context->event_queue, &evt, DEADLINE_MS * 2 / portTICK_PERIOD_MS) == pdTRUE) {
             if (evt == I2C_SLAVE_EVT_RX) {
               uint8_t* buff = context->command_data;
               int64_t end_time = esp_timer_get_time();
