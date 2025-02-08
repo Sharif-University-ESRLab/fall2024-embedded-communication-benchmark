@@ -1,0 +1,92 @@
+menu "Echo Example Configuration"
+
+    orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"
+
+    config EXAMPLE_TOTAL_COUNT
+        int "How many rounds of simulation to run"
+        range 1 100000
+        default 50
+        help
+            How many times to run the send/receive round simulation
+
+    config EXAMPLE_DEADLINE
+        int "Simulation deadline (ms)"
+        range 1 10000
+        default 100
+        help
+            in the simulation RT system, what would be the
+            deadline of the read/write task
+
+    config EXAMPLE_MASTER_MOSI
+        int "GPIO Pin number for Master's MOSI"
+        range 1 40
+        default 13
+        help
+            Something
+
+    config EXAMPLE_MASTER_MISO
+        int "GPIO Pin number for Master's MISO"
+        range 1 40
+        default 12
+        help
+            Something
+
+    config EXAMPLE_MASTER_CLK
+        int "GPIO Pin number for Master's CLK"
+        range 1 40
+        default 14
+        help
+            Something
+
+    config EXAMPLE_MASTER_CS
+        int "GPIO Pin number for Master's CS"
+        range 1 40
+        default 15
+        help
+            Something
+
+    config EXAMPLE_SLAVE_MOSI
+        int "GPIO Pin number for Slave's MOSI"
+        range 1 40
+        default 23
+        help
+            Something
+
+    config EXAMPLE_SLAVE_MISO
+        int "GPIO Pin number for Slave's MISO"
+        range 1 40
+        default 19
+        help
+            Something
+
+    config EXAMPLE_SLAVE_CLK
+        int "GPIO Pin number for Slave's CLK"
+        range 1 40
+        default 18
+        help
+            Something
+
+    config EXAMPLE_SLAVE_CS
+        int "GPIO Pin number for Slave's CS"
+        range 1 40
+        default 5
+        help
+            Something
+
+    #config EXAMPLE_DATA_SIZE
+    #    int "Size of the data being transmitted each round"
+    #    range 5 2048
+    #    default 512
+    #    help
+    #        in each round of simulation, a random buffer is
+    #        initialized to be transmitted. The parameter
+    #        specifies the size of that buffer
+
+    config EXAMPLE_TASK_STACK_SIZE
+        int "SPI echo example task stack size"
+        range 1024 16384
+        default 3072
+        help
+            Defines stack size for SPI echo example. Insufficient stack size can cause crash.
+
+endmenu

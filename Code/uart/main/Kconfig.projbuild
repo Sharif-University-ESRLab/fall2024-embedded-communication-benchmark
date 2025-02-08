@@ -1,0 +1,96 @@
+menu "Echo Example Configuration"
+
+    orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"
+
+    config EXAMPLE_TOTAL_COUNT
+        int "How many rounds of simulation to run"
+        range 1 100000
+        default 50
+        help
+            How many times to run the send/receive round simulation
+
+    config EXAMPLE_INTERNAL_SIMUL
+        bool "Internal simulation"
+        default false
+        help
+            Should the simulation internally i.e: should the
+            simulation use a second UART device as the Infinity
+            source.
+            If this is false then the infinity source must be 
+            produced by a connected UART contriller to the DEVICE
+
+    config EXAMPLE_DEADLINE
+        int "Simulation deadline (ms)"
+        range 1 10000
+        default 100
+        help
+            in the simulation RT system, what would be the
+            deadline of the read/write task
+
+    config EXAMPLE_UART_PORT_NUM_INF
+        int "Infinity UART port number"
+        range 0 2 if IDF_TARGET_ESP32 || IDF_TARGET_ESP32S3
+        default 2 if IDF_TARGET_ESP32 || IDF_TARGET_ESP32S3
+        range 0 1
+        default 1
+        help
+            UART communication port number for the example.
+            See UART documentation for available port numbers.
+
+    config EXAMPLE_UART_PORT_NUM_DEV
+        int "Device UART port number"
+        range 0 2 if IDF_TARGET_ESP32 || IDF_TARGET_ESP32S3
+        default 2 if IDF_TARGET_ESP32 || IDF_TARGET_ESP32S3
+        range 0 1
+        default 1
+        help
+            UART communication port number for the example.
+            See UART documentation for available port numbers.
+
+    config EXAMPLE_UART_BAUD_RATE
+        int "UART communication speed"
+        range 1200 115200
+        default 115200
+        help
+            UART communication speed for Modbus example.
+
+    config EXAMPLE_UART_RXD_INF
+        int "Infinite UART RXD pin number"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_IN_RANGE_MAX
+        default 5
+        help
+            GPIO number for UART RX pin. See UART documentation for more information
+            about available pin numbers for UART.
+
+    config EXAMPLE_UART_TXD_INF
+        int "Infinite UART TXD pin number"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 4
+        help
+            GPIO number for UART TX pin. See UART documentation for more information
+            about available pin numbers for UART.
+
+    config EXAMPLE_UART_RXD_DEV
+        int "Device UART RXD pin number"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_IN_RANGE_MAX
+        default 5
+        help
+            GPIO number for UART RX pin. See UART documentation for more information
+            about available pin numbers for UART.
+
+    config EXAMPLE_UART_TXD_DEV
+        int "Device UART TXD pin number"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 4
+        help
+            GPIO number for UART TX pin. See UART documentation for more information
+            about available pin numbers for UART.
+
+    config EXAMPLE_TASK_STACK_SIZE
+        int "UART echo example task stack size"
+        range 1024 16384
+        default 3072
+        help
+            Defines stack size for UART echo example. Insufficient stack size can cause crash.
+
+endmenu
