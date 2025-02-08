@@ -1,19 +1,16 @@
 
-![Logo](https://via.placeholder.com/600x150?text=Your+Logo+Here+600x150)
+<img src="https://www.sharif.ir/documents/20124/0/logo-fa-IR.png/4d9b72bc-494b-ed5a-d3bb-e7dfd319aec8?t=1609608338755" width="150px" />
 
 
-# Project Title
+# Creating an embdedded system's benchmark (communication)
 
-A brief description of what this project does and who it's for comes here.
+This project was done for a hardware lab module in sharif university of technology. The purpose of the project is creating a benchmark for testing communication protocols like UART, I2C, and SPI in embedded systems. The implementation was done with the ESP32 board in mind and the chosen coding platfrom was ESP-IDF.
 
 
 ## Tools
 In this section, you should mention the hardware or simulators utilized in your project.
-- Qemu
-- Gem5
 - ESP32
-- Raspberry Pi 3B
-- Temperature Sensor
+- ESP-IDF
 
 
 ## Implementation Details
@@ -25,41 +22,62 @@ Feel free to use sub-topics for your projects. If your project consists of multi
 
 ## How to Run
 
-In this part, you should provide instructions on how to run your project. Also if your project requires any prerequisites, mention them. 
+- Follow the installation link to install the ESP-IDF framework. From this point forward, we will assume you have installed the framework under ~/esp/esp-idf/
 
-#### Examples:
-#### Build Project
-Your text comes here
+- Activate environment by running
 ```bash
-  build --platform=OvmfPkg/OvmfPkgX64.dsc --arch=X64 --buildtarget=RELEASE --tagname=GCC5
+~/esp/esp-idf/export.sh
+ ```
+if you run into any problems at this step, please check out the installation toturial provided by the framework.
+
+- Clone the repository and navigate to the project folder
+
+- If this is your first time running this code, run
+```bash
+python idf.py set-target esp32
 ```
 
-#### Run server
-Your text comes here
+- Run 
 ```bash
-  pyhton server.py -p 8080
+python idf.py menuconfig
 ```
+and configure the project. Be sure to save when you're done.
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `-p` | `int` | **Required**. Server port |
+- Make sure the connections on the board are all correct, and conncet the board to your computer
 
+- Look in the /dev folder to find your esp32 device (typically in a directory like /dev/ttyUSB0)
+
+- Run
+```bash
+python idf.py -p {block device address} flash monitor
+```
+(You may need to run chmod to allow idf.py to access the block device)
 
 
 ## Results
-In this section, you should present your results and provide an explanation for them.
+As expected, the SPI protocol vastly outperforms its counterparts. The read time is not comparable due to the nature of the SPI protocol, but we can compare and plot the write times. <br />
+- UART results <br />
+<img src="./Miscellaneous/UART.jpg" />
+- SPI results <br />
+<img src="./Miscellaneous/SPI.jpg" />
+- I2C results <br />
+<img src="./Miscellaneous/I2C.jpg">
 
-Using image is required.
+This plot aptly illustrates the results and how they compare: <br />
+<img src="./Miscellaneous/results.png" />
+
 
 ## Related Links
 Some links related to your project come here.
- - [EDK II](https://github.com/tianocore/edk2)
- - [ESP32 Pinout](https://randomnerdtutorials.com/esp32-pinout-reference-gpios/)
- - [Django Doc](https://docs.djangoproject.com/en/5.0/)
+ - [esp-idf installation](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html)
+ - [esp-idf i2c](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/peripherals/i2c.html#introduction)
+ - [esp-idf spi master](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/peripherals/spi_master.html)
+ - [esp-idf spi slave](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/peripherals/spi_slave.html)
+ - [esp-idf uart](https://docs.espressif.com/projects/esp-idf/en/v5.4/esp32/api-reference/peripherals/uart.html)
 
 
 ## Authors
 Authors and their github link come here.
-- [@Author1](https://github.com/Sharif-University-ESRLab)
-- [@Author2](https://github.com/Sharif-University-ESRLab)
+- [@NegarAskari](https://github.com/NegarAskari)
+- [@HiradDavari](https://github.com/theAester)
 
